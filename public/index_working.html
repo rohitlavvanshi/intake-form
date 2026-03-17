@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -14,13 +13,29 @@ h2 { background:#1a3a5f; color:white; padding:10px; margin-top:30px; border-radi
 .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; }
 .form-group { display:flex; flex-direction:column; }
 label { font-weight:bold; margin-bottom:5px; color:#444; }
-input[type="text"], input[type="date"], input[type="email"], textarea {
+input[type="text"], input[type="date"], input[type="email"], textarea, select {
 padding:8px; border:1px solid #ccc; border-radius:4px; width:100%; box-sizing:border-box;
 }
 .checkbox-row { display:flex; flex-wrap:wrap; gap:15px; align-items:center; padding:10px 0; }
 .checkbox-item { display:flex; align-items:center; gap:8px; min-width:220px; }
 .full-width { grid-column: span 3; }
-button { width:100%; padding:15px; background:#28a745; color:white; border:none; border-radius:5px; font-size:1.2em; cursor:pointer; margin-top:30px; }
+
+button {
+width:100%;
+padding:15px;
+background:#28a745;
+color:white;
+border:none;
+border-radius:5px;
+font-size:1.2em;
+cursor:pointer;
+margin-top:30px;
+}
+
+button:disabled{
+background:#999;
+cursor:not-allowed;
+}
 </style>
 
 </head>
@@ -32,7 +47,7 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 <h1>Case Intake & Referral Form</h1>
 
 <form method="POST" action="/submit">
-
+<input type="hidden" name="form_id" id="form_id">
 <div class="section">
 <h2>1. Administrative Details (Page 1)</h2>
 
@@ -40,12 +55,12 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 
 <div class="form-group">
 <label>Attorney</label>
-<input type="text" name="attorney" value="Phil Kesler">
+<input type="text" name="attorney">
 </div>
 
 <div class="form-group">
 <label>Secretary</label>
-<input type="text" name="secretary" value="Carol">
+<input type="text" name="secretary" >
 </div>
 
 <div class="form-group">
@@ -75,7 +90,7 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 
 <div class="form-group">
 <label>Case Type</label>
-<input type="text" name="case_type" value="Personal Injury">
+<input type="text" name="case_type">
 </div>
 
 <div class="form-group">
@@ -103,7 +118,7 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 
 <div class="form-group full-width">
 <label>Full Name</label>
-<input type="text" name="full_name" value="Barnabe James Beatle">
+<input type="text" name="full_name" >
 </div>
 
 <div class="form-group full-width">
@@ -123,12 +138,12 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 
 <div class="form-group">
 <label>Email Address</label>
-<input type="email" name="email_address" value="luckie13ky@gmail.com">
+<input type="email" name="email_address" >
 </div>
 
 <div class="form-group">
 <label>DOB</label>
-<input type="date" name="dob" value="1970-12-25">
+<input type="date" name="dob" >
 </div>
 
 <div class="form-group">
@@ -138,17 +153,17 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 
 <div class="form-group">
 <label>Best Form of Contact</label>
-<input type="text" name="best_contact" value="Phone">
+<input type="text" name="best_contact" >
 </div>
 
 <div class="form-group">
 <label>Marital Status</label>
-<input type="text" name="marital_status" value="Married">
+<input type="text" name="marital_status" >
 </div>
 
 <div class="form-group">
 <label>Spouse Name</label>
-<input type="text" name="spouse_name" value="Peter Rabbit">
+<input type="text" name="spouse_name" >
 </div>
 
 <div class="form-group">
@@ -181,12 +196,12 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 
 <div class="form-group">
 <label>City</label>
-<input type="text" name="city" value="Rockford">
+<input type="text" name="city" >
 </div>
 
 <div class="form-group">
 <label>County</label>
-<input type="text" name="county" value="Winnebago">
+<input type="text" name="county" >
 </div>
 
 <div class="form-group">
@@ -196,7 +211,7 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 
 <div class="form-group full-width">
 <label>Specific Location (Intersection)</label>
-<input type="text" name="specific_location" value="Perrysilly & State">
+<input type="text" name="specific_location" >
 </div>
 
 <div class="form-group full-width">
@@ -205,18 +220,18 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 </div>
 
 <div class="checkbox-item">
-<input type="checkbox" name="hit_and_run" value="yes" checked>
+<input type="checkbox" name="hit_and_run"  checked>
 <label>Hit & Run</label>
 </div>
 
 <div class="checkbox-item">
-<input type="checkbox" name="police_investigated" value="yes">
+<input type="checkbox" name="police_investigated" >
 <label>Police Investigated</label>
 </div>
 
 <div class="form-group">
 <label>Agency</label>
-<input type="text" name="agency" value="Rockford PD">
+<input type="text" name="agency" >
 </div>
 
 <div class="form-group">
@@ -226,7 +241,7 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 
 <div class="form-group">
 <label>Citation</label>
-<input type="text" name="citation" value="Unsure/I don't know">
+<input type="text" name="citation" >
 </div>
 
 </div>
@@ -239,27 +254,27 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 
 <div class="form-group">
 <label>PD Amount</label>
-<input type="text" name="pd_amount" value="Totaled">
+<input type="text" name="pd_amount" >
 </div>
 
 <div class="checkbox-item">
 <label>Photos of Damage:</label>
-<input type="text" name="photos_of_damage" value="Yes">
+<input type="text" name="photos_of_damage" >
 </div>
 
 <div class="checkbox-item">
 <label>Vehicle Repaired:</label>
-<input type="text" name="vehicle_repaired" value="No">
+<input type="text" name="vehicle_repaired" >
 </div>
 
 <div class="form-group full-width">
 <label>Vehicle Location</label>
-<input type="text" name="vehicle_location" value="at his house">
+<input type="text" name="vehicle_location" >
 </div>
 
 <div class="form-group">
 <label>Witness 1 Name</label>
-<input type="text" name="witness1_name" value="None">
+<input type="text" name="witness1_name" >
 </div>
 
 <div class="form-group">
@@ -289,12 +304,12 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 
 <div class="form-group full-width">
 <label>Injuries Sustained</label>
-<input type="text" name="injuries_sustained" value="hit my funny bone and it hurt">
+<input type="text" name="injuries_sustained" >
 </div>
 
 <div class="form-group">
 <label>Prior Injuries</label>
-<input type="text" name="prior_injuries" value="No">
+<input type="text" name="prior_injuries" >
 </div>
 
 <div class="form-group full-width">
@@ -312,17 +327,22 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 
 <div class="form-group">
 <label>Plaintiff Auto Ins.</label>
-<input type="text" name="plaintiff_auto_ins" value="Funny bone ins.">
+<input type="text" name="plaintiff_auto_ins" >
 </div>
 
 <div class="form-group">
 <label>Policy No</label>
-<input type="text" name="policy_no" value="25-25">
+<input type="text" name="policy_no" >
 </div>
 
 <div class="checkbox-item">
-<input type="checkbox" name="liability_only" value="yes">
+<input type="checkbox" name="liability_only" >
 <label>Liability ONLY</label>
+</div>
+
+<div class="form-group">
+<label>Med Pay</label>
+<input type="text" name="med_pay">
 </div>
 
 <div class="form-group">
@@ -332,17 +352,22 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 
 <div class="form-group">
 <label>Umbrella</label>
-<input type="text" name="umbrella" value="Unsure/I don't know">
+<input type="text" name="umbrella" >
 </div>
 
 <div class="form-group">
 <label>Defendant #1 Name</label>
-<input type="text" name="defendant1_name" value="Danny Defendant">
+<input type="text" name="defendant1_name" >
 </div>
 
 <div class="form-group">
 <label>Defendant #1 Ins.</label>
-<input type="text" name="defendant1_ins" value="Polly Progressive">
+<input type="text" name="defendant1_ins" >
+</div>
+
+<div class="form-group">
+<label>Defendant #2 Name</label>
+<input type="text" name="defendant2_name" >
 </div>
 
 <div class="form-group">
@@ -356,13 +381,18 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 </div>
 
 <div class="form-group">
+<label>Offer Made</label>
+<input type="text" name="offer_made" >
+</div>
+
+<div class="form-group">
 <label>Offer Made Amount</label>
-<input type="text" name="offer_made_amount" value="None">
+<input type="text" name="offer_made_amount" >
 </div>
 
 <div class="form-group">
 <label>Group Health Ins.</label>
-<input type="text" name="group_health_ins" value="Helmet Health Ins.">
+<input type="text" name="group_health_ins" >
 </div>
 
 <div class="form-group">
@@ -398,89 +428,365 @@ button { width:100%; padding:15px; background:#28a745; color:white; border:none;
 </div>
 </div>
 
+<!-- ================= SECTION 6 ================= -->
+
 <div class="section">
 <h2>6. PI THINGS TO DO (Page 4)</h2>
 
 <div class="checkbox-row">
 
-<label class="checkbox-item"><input type="checkbox" name="meeting_with_phil" value="yes">1. Meeting with Phil</label> <label class="checkbox-item"><input type="checkbox" name="retainer_signed" value="yes">2. Retainer Signed</label> <label class="checkbox-item"><input type="checkbox" name="ltr_to_referring_atty" value="yes">3. Ltr to Referring Atty</label> <label class="checkbox-item"><input type="checkbox" name="conflict_waiver" value="yes">4. Conflict Waiver</label> <label class="checkbox-item"><input type="checkbox" name="insurance_cards" value="yes">5. Insurance Cards (Auto/Health/Supp)</label> <label class="checkbox-item"><input type="checkbox" name="obtain_il_crash_report" value="yes">6. Obtain IL Crash Report</label> <label class="checkbox-item"><input type="checkbox" name="request_video_photos" value="yes">7. Request Video/Photos</label> <label class="checkbox-item"><input type="checkbox" name="preserve_evidence_letter" value="yes">8. Preserve Evidence Letter</label> <label class="checkbox-item"><input type="checkbox" name="atty_liens_to_defendant" value="yes">9. Atty Liens to Defendant</label> <label class="checkbox-item"><input type="checkbox" name="atty_liens_to_def_ins_co" value="yes">10. Atty Liens to Def Ins Co.</label> <label class="checkbox-item"><input type="checkbox" name="notify_medicare_ihfs" value="yes">11. Notify MEDICARE/IHFS</label> <label class="checkbox-item"><input type="checkbox" name="notify_med_pay_health_wc" value="yes">12. Notify Med Pay/Health Ins/WC</label> <label class="checkbox-item"><input type="checkbox" name="um_sos_hit_run_notice" value="yes">13. UM/SOS/Hit & Run Notice</label> <label class="checkbox-item"><input type="checkbox" name="dram_foia" value="yes">14. DRAM/FOIA (1 Yr SOL)</label> <label class="checkbox-item"><input type="checkbox" name="check_def_ticket" value="yes">15. Check Def Ticket/Guilty Plea</label> <label class="checkbox-item"><input type="checkbox" name="send_billing_letter" value="yes">16. Send Billing Letter</label> <label class="checkbox-item"><input type="checkbox" name="order_med_records_bills" value="yes">17. Order Med Records/Bills</label> <label class="checkbox-item"><input type="checkbox" name="liability_limits_letter" value="yes">18. Liability Limits Ltr to Def/Ins</label> <label class="checkbox-item"><input type="checkbox" name="wage_verification" value="yes">19. Wage Verification</label>
+<label class="checkbox-item"><input type="checkbox" name="meeting_with_phil"  >1. Meeting with Phil</label>
+<label class="checkbox-item"><input type="checkbox" name="retainer_signed"  >2. Retainer Signed</label>
+<label class="checkbox-item"><input type="checkbox" name="ltr_to_referring_atty"  >3. Ltr to Referring Atty</label>
+<label class="checkbox-item"><input type="checkbox" name="conflict_waiver"  >4. Conflict Waiver</label>
+<label class="checkbox-item"><input type="checkbox" name="insurance_cards"  >5. Insurance Cards</label>
+<label class="checkbox-item"><input type="checkbox" name="obtain_il_crash_report"  >6. Obtain IL Crash Report</label>
+<label class="checkbox-item"><input type="checkbox" name="request_video_photos"  >7. Request Video/Photos</label>
+<label class="checkbox-item"><input type="checkbox" name="preserve_evidence_letter"  >8. Preserve Evidence Letter</label>
+<label class="checkbox-item"><input type="checkbox" name="atty_liens_to_defendant"  >9. Atty Liens to Defendant</label>
+<label class="checkbox-item"><input type="checkbox" name="atty_liens_to_def_ins_co"  >10. Atty Liens to Def Ins</label>
+<label class="checkbox-item"><input type="checkbox" name="notify_medicare_ihfs"  >11. Notify MEDICARE/IHFS</label>
+<label class="checkbox-item"><input type="checkbox" name="notify_med_pay_health_wc"  >12. Notify Med Pay</label>
+<label class="checkbox-item"><input type="checkbox" name="um_sos_hit_run_notice"  >13. UM/SOS Notice</label>
+<label class="checkbox-item"><input type="checkbox" name="dram_foia"  >14. DRAM/FOIA</label>
+<label class="checkbox-item"><input type="checkbox" name="check_def_ticket"  >15. Check Def Ticket</label>
+<label class="checkbox-item"><input type="checkbox" name="send_billing_letter"  >16. Send Billing Letter</label>
+<label class="checkbox-item"><input type="checkbox" name="order_med_records_bills"  >17. Order Med Records</label>
+<label class="checkbox-item"><input type="checkbox" name="liability_limits_letter"  >18. Liability Limits Letter</label>
+<label class="checkbox-item"><input type="checkbox" name="wage_verification"  >19. Wage Verification</label>
 
 </div>
 </div>
 
-<div class="section">
-<h2>7. Attorney Notes & Completion</h2>
+
+
+<!-- ================= SECTION 7 ================= -->
+
+<div class="section" id="section7">
+
+<h2>7. Additional Client & Insurance Details</h2>
+
+<div class="grid">
+
+<div class="form-group">
+<label>Salutation</label>
+<input type="text" name="salutation">
+</div>
+
+<div class="form-group">
+<label>Pronouns</label>
+<input type="text" name="pronouns">
+</div>
+
+<div class="form-group">
+<label>Zip Code</label>
+<input type="text" name="zip_code">
+</div>
+
+<div class="form-group">
+<label>Insurance Amount</label>
+<input type="text" name="insurance_amount">
+</div>
+
+
+<div class="form-group">
+<label>Returned to Work</label>
+<input type="text" name="returned_to_work">
+</div>
+
+<div class="form-group">
+<label>Property Damage</label>
+<input type="text" name="property_damage">
+</div>
+
+<div class="form-group">
+<label>Lost Wage Claim</label>
+<input type="text" name="lost_wage_claim">
+</div>
+
+<div class="form-group">
+<label>Medicaid</label>
+<input type="text" name="medicaid">
+</div>
+
+<div class="form-group">
+<label>Notes</label>
+<input type="text" name="notes">
+</div>
+
+</div>
+
+</div>
+<!-- ================= SUBMIT INTAKE BUTTON ================= -->
+
+<div class="section" style="text-align:center">
+
+<button type="button" id="intakeBtn">
+Submit Intake
+</button>
+
+<span id="intakeStatus" style="margin-left:15px;font-size:20px;color:green;display:none;">
+✔ Intake Submitted
+</span>
+
+<input type="hidden" name="intake_completed" id="intake_completed" >
+
+</div>
+
+<!-- ================= SECTION 8 ================= -->
+
+<div class="section" id="section8" style="display:none">
+
+<h2>8. Attorney Notes & Completion</h2>
+
+<div class="grid">
+
+<div class="form-group">
+<label>SOL</label>
+<input type="text" name="sol_text">
+</div>
+
+<div class="form-group">
+<label>Client Status</label>
+
+<select name="client_status">
+<option value="">Select Status</option>
+<option value="Advice Only">Advice Only</option>
+<option value="Failed to show">Failed to show</option>
+<option value="Hired">Hired</option>
+<option value="Not Retained">Not Retained</option>
+<option value="Referred to another Attorney">Referred to another Attorney</option>
+<option value="Refused">Refused</option>
+</select>
+
+</div>
 
 <div class="form-group full-width">
-<label>Additional Attorney Notes (Page 3 & 4)</label>
+<label>Additional Attorney Notes</label>
 <textarea name="attorney_notes" rows="4"></textarea>
 </div>
 
-<div class="checkbox-item" style="margin-top:15px;">
-<input type="checkbox" name="intake_completed" value="yes">
-<label><strong>INTAKE COMPLETED</strong></label>
 </div>
 
 </div>
 
-<button type="submit">Finalize Intake for GHL Upload</button>
+<button type="submit" id="submitBtn" disabled>
+Finalize Intake for GHL Upload
+</button>
 
 </form>
 
 </div>
 <script>
 
+document.addEventListener("DOMContentLoaded", function(){
+
+/* ================= GET FORM ID ================= */
+
 function getFormIdFromURL(){
-    const parts = window.location.pathname.split("/");
-    if(parts.length >= 3 && parts[1] === "form"){
-        return parts[2];
-    }
-    return null;
+  const parts = window.location.pathname.split("/");
+  if(parts.length >= 3 && parts[1] === "form"){
+    return parts[2];
+  }
+  return null;
 }
+
+/* ================= DATE FORMAT ================= */
+
+function formatDateForInput(value){
+
+  if(!value) return "";
+
+  /* if already correct */
+  if(/^\d{4}-\d{2}-\d{2}$/.test(value)){
+    return value;
+  }
+
+  /* handle M-D-YYYY or MM-DD-YYYY */
+  const parts = value.split("-");
+
+  if(parts.length === 3){
+
+    let mm = parts[0].padStart(2,"0");
+    let dd = parts[1].padStart(2,"0");
+    let yyyy = parts[2];
+
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  /* fallback */
+  const d = new Date(value);
+
+  if(isNaN(d)) return "";
+
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth()+1).padStart(2,"0");
+  const dd = String(d.getDate()).padStart(2,"0");
+
+  return `${yyyy}-${mm}-${dd}`;
+}
+/* ================= PREFILL ================= */
 
 const formId = getFormIdFromURL();
 
 if(formId){
 
-    fetch("/api/form/" + formId)
-    .then(res => res.json())
-    .then(data => {
+  const hidden = document.getElementById("form_id");
+  if(hidden) hidden.value = formId;
 
-        console.log("Prefill data:", data);
+  /* IMPORTANT: use API route that returns JSON */
 
-        Object.keys(data).forEach(function(key){
+  fetch("/api/form/" + formId)
 
-            const elements = document.querySelectorAll('[name="'+key+'"]');
+  .then(res => res.json())
 
-            if(!elements.length) return;
+  .then(data => {
 
-            elements.forEach(function(el){
+    const formData = data.prefill || {};
 
-                const value = data[key];
+    Object.keys(formData).forEach(function(key){
 
-                if(el.type === "checkbox"){
-                    if(value === "yes" || value === true){
-                        el.checked = true;
-                    }
-                }
-                else if(el.tagName === "TEXTAREA"){
-                    el.value = value;
-                }
-                else{
-                    el.value = value;
-                }
+      const elements = document.querySelectorAll('[name="'+key+'"]');
 
-            });
+      elements.forEach(function(el){
 
-        });
+        const value = formData[key];
 
-    })
-    .catch(err => console.error("Prefill error:", err));
+        if(el.type === "checkbox"){
+
+          if(value === "yes" || value === "Yes" || value === true){
+            el.checked = true;
+          }
+
+        }
+
+        else if(el.type === "date"){
+
+          const safeDate = formatDateForInput(value);
+
+          if(safeDate){
+            el.value = safeDate;
+          }
+
+        }
+
+        else{
+
+          el.value = value ?? "";
+
+        }
+
+      });
+
+    });
+
+  })
+
+  .catch(err => console.error("Prefill error:", err));
 
 }
+
+/* ================= INTAKE BUTTON ================= */
+
+const intakeBtn = document.getElementById("intakeBtn");
+const intakeStatus = document.getElementById("intakeStatus");
+const intakeCompleted = document.getElementById("intake_completed");
+
+const section8 = document.getElementById("section8");
+const submitBtn = document.getElementById("submitBtn");
+
+const form = document.querySelector("form");
+
+if(intakeBtn){
+
+  intakeBtn.addEventListener("click", async function(){
+
+    try{
+
+      /* collect CURRENT form values */
+
+      const formData = new FormData(form);
+
+      const jsonData = Object.fromEntries(formData.entries());
+
+      console.log("Sending to webhook:", jsonData);
+
+      await fetch("https://webhook.site/262ac521-699e-4496-a6c1-f22098ab97e4",{
+        method:"POST",
+        mode:"no-cors",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify(jsonData)
+      });
+
+      console.log("Webhook request sent");
+
+    }
+    catch(error){
+      console.error("Webhook error:", error);
+    }
+
+    /* mark intake complete */
+
+    intakeCompleted.value = "yes";
+
+    intakeStatus.style.display = "inline";
+
+    intakeBtn.disabled = true;
+    intakeBtn.style.background = "#999";
+
+    section8.style.display = "block";
+
+    submitBtn.disabled = false;
+
+    /* LOCK sections 1-7 WITHOUT disabling */
+
+    document.querySelectorAll("input, textarea, select").forEach(function(field){
+
+      if(
+        field.id !== "submitBtn" &&
+        field.id !== "intake_completed" &&
+        !section8.contains(field)
+      ){
+
+        if(field.tagName === "INPUT" || field.tagName === "TEXTAREA"){
+          field.readOnly = true;
+        }
+
+        if(field.type === "checkbox"){
+          field.onclick = function(e){ e.preventDefault(); };
+        }
+
+        if(field.tagName === "SELECT"){
+          field.style.pointerEvents = "none";
+        }
+
+      }
+
+    });
+
+  });
+
+}
+
+/* ================= FINAL SUBMIT CHECK ================= */
+
+form.addEventListener("submit", function(e){
+
+  if(intakeCompleted.value !== "yes"){
+
+    e.preventDefault();
+
+    alert("Please click 'Submit Intake' before final submission.");
+
+  }
+
+});
+
+});
 
 </script>
 
 </body>
 </html>
-
