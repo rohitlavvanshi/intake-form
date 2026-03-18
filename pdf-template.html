@@ -5,472 +5,436 @@
 <title>Case Intake</title>
 
 <style>
+/* Print / PDF-friendly layout */
+@page { size: A4; margin: 14mm; }
+html, body { height: 100%; }
 body{
-font-family: Arial, Helvetica, sans-serif;
-font-size:14px;
-padding:15px;
-line-height:1.4;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size:14px;
+  padding:12px;            /* reduced from 40px to fit pages */
+  line-height:1.4;
+  color:#111;
+  box-sizing: border-box;
+  -webkit-print-color-adjust: exact;
 }
 
-/* Define PDF page layout */
-
-@page{
-size:A4;
-margin:20mm;
+/* Page wrapper (one physical page per .page) */
+.page {
+  page-break-after: always;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  margin-bottom: 6mm;
 }
 
-/* Header layout */
-
+/* header columns */
 .header{
-display:flex;
-justify-content:space-between;
-margin-bottom:15px;
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:10px;
 }
 
 .col{
-width:48%;
+  width:48%;
 }
 
-/* Page wrapper */
-
-.page{
-page-break-inside:avoid;
-break-inside:avoid;
-margin-bottom:20px;
-}
-
-/* Section titles */
-
+/* titles / rows */
 .section-title{
-text-align:center;
-font-weight:bold;
-font-size:18px;
-margin:15px 0;
-text-decoration:underline;
+  text-align:center;
+  font-weight:bold;
+  font-size:18px;
+  margin:12px 0;
+  text-decoration:underline;
 }
-
-/* Row layout */
 
 .row{
-display:flex;
-justify-content:space-between;
-margin-bottom:5px;
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:6px;
+  align-items:flex-start;
+  gap:8px;
 }
-
-/* Underline field */
 
 .line{
-border-bottom:1px solid #000;
-min-height:16px;
-margin-bottom:5px;
+  border-bottom:1px solid #000;
+  min-height:18px;
+  margin-bottom:6px;
+  padding-bottom:2px;
 }
 
-/* Checkbox styling */
+/* smaller helpers */
+.small { font-size:13px; color:#222; }
 
+/* checkbox looks consistent on PDF */
 .checkbox{
-display:inline-block;
-width:18px;
-height:18px;
-border:2px solid black;
-margin-left:8px;
-text-align:center;
-font-weight:bold;
+  display:inline-flex;
+  width:18px;
+  height:18px;
+  border:2px solid black;
+  margin-left:8px;
+  text-align:center;
+  font-weight:bold;
+  line-height:16px;
+  align-items:center;
+ justify-content:center;
 }
+
+/* keep tasks area tighter */
+.task-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:6px;
+}
+
+.task-left{ flex:1; }
+
+/* avoid extra margins causing page overflow */
+h2, h3 { margin: 8px 0; padding: 0; }
+hr { border:0; border-top:1px solid #000; margin:8px 0; }
 </style>
 </head>
 
 <body>
 
-<!-- PAGE 1 -->
-
+<!-- PAGE 1: HEADER, REFERRAL/INTAKE, CLIENT, INCIDENT UP TO VEHICLE LOCATION -->
 <div class="page">
 
-<div class="header">
+  <div class="header">
+    <div class="col">
+      <div>Attorney: ${d.attorney || ""}</div>
+      <div>Secretary: ${d.secretary || ""}</div>
+      <div>Co File: ${d.co_file || ""}</div>
+    </div>
 
-<div class="col">
-<div>Attorney: ${d.attorney || ""}</div>
-<div>Secretary: ${d.secretary || ""}</div>
-<div>Co File: ${d.co_file || ""}</div>
-</div>
+    <div class="col" style="text-align:right;">
+      <div>Appointment date: ${d.appointment_date || ""}</div>
+      <div>Time: ${d.appointment_time || ""}</div>
+      <div>File No: ${d.file_no || ""}</div>
+      <div>SOL: ${d.sol || ""}</div>
+    </div>
+  </div>
 
-<div class="col">
-<div>Appointment date: ${d.appointment_date || ""}</div>
-<div>Time: ${d.appointment_time || ""}</div>
-<div>File No: ${d.file_no || ""}</div>
-<div>SOL: ${d.sol || ""}</div>
-</div>
+  <div class="section-title">Referral/Intake Information</div>
 
-</div>
+  <div class="row">
+    <div>Case Type: ${d.case_type || ""}</div>
+    <div>Date: ${d.intake_date || ""}</div>
+  </div>
 
-<div class="section-title">Referral/Intake Information</div>
+  <div class="row">
+    <div>Referral: ${d.referral_source || ""}</div>
+    <div>Search Term: ${d.search_term || ""}</div>
+  </div>
 
-<div class="row">
-<div>Case Type: ${d.case_type || ""}</div>
-<div>Date: ${d.intake_date || ""}</div>
-</div>
+  <br>
 
-<div class="row">
-<div>Referral: ${d.referral_source || ""}</div>
-<div>Search Term: ${d.search_term || ""}</div>
-</div>
+  <div>Name: ${d.full_name || ""}</div>
+  <div>Address: ${d.address || ""}</div>
 
-<br>
+  <div class="row">
+    <div>Home Phone: ${d.home_phone || ""}</div>
+    <div>Cell Phone: ${d.cell_phone || ""}</div>
+  </div>
 
-<div>Name: ${d.full_name || ""}</div>
-<div>Address: ${d.address || ""}</div>
+  <div class="row">
+    <div>Email Address: ${d.email_address || ""}</div>
+    <div>Best Form of Contact: ${d.best_contact || ""}</div>
+  </div>
 
-<div class="row">
-<div>Home Phone: ${d.home_phone || ""}</div>
-<div>Cell Phone: ${d.cell_phone || ""}</div>
-</div>
+  <div class="row">
+    <div>DOB: ${d.dob || ""}</div>
+    <div>SS#: ${d.ssn || ""}</div>
+  </div>
 
-<div class="row">
-<div>Email Address: ${d.email_address || ""}</div>
-<div>Best Form of Contact: ${d.best_contact || ""}</div>
-</div>
+  <div class="row">
+    <div>Marital Status: ${d.marital_status || ""}</div>
+    <div>Spouse's Name: ${d.spouse_name || ""}</div>
+  </div>
 
-<div class="row">
-<div>DOB: ${d.dob || ""}</div>
-<div>SS#: ${d.ssn || ""}</div>
-</div>
+  <div class="row">
+    <div>Contact Person's Name: ${d.contact_person_name || ""}</div>
+    <div>Phone: ${d.contact_phone || ""}</div>
+  </div>
 
-<div class="row">
-<div>Marital Status: ${d.marital_status || ""}</div>
-<div>Spouse's Name: ${d.spouse_name || ""}</div>
-</div>
+  <div>Contact Person's Address: ${d.contact_person_address || ""}</div>
 
-<div class="row">
-<div>Contact Person's Name: ${d.contact_person_name || ""}</div>
-<div>Phone: ${d.contact_phone || ""}</div>
-</div>
+  <hr>
 
-<div>Contact Person's Address: ${d.contact_person_address || ""}</div>
+  <div class="row">
+    <div>Date of Incident: ${d.incident_date || ""}</div>
+    <div>Location: ${d.specific_location || ""}</div>
+  </div>
 
-<hr>
+  <div class="row">
+    <div>City: ${d.city || ""}</div>
+    <div>State: ${d.state || ""}</div>
+    <div>County: ${d.county || ""}</div>
+  </div>
 
-<div class="row">
-<div>Date of Incident: ${d.incident_date || ""}</div>
-<div>Location: ${d.specific_location || ""}</div>
-</div>
+  <div class="row">
+    <div>Details of the Incident:</div>
+    <div>Hit & Run <span class="checkbox">${(d.hit_and_run === "yes" || d.hit_and_run === "on") ? "✔" : ""}</span></div>
+  </div>
 
-<div class="row">
-<div>City: ${d.city || ""}</div>
-<div>State: ${d.state || ""}</div>
-<div>County: ${d.county || ""}</div>
-</div>
+  <div class="line">${d.incident_details || ""}</div>
 
-<div class="row">
-<div>Details of the Incident:</div>
-<div>Hit & Run <span class="checkbox">${(d.hit_and_run === "yes" || d.hit_and_run === "on") ? "✔" : ""}</span></div>
-</div>
+  <!-- PROPERTY DAMAGE & VEHICLE FIELDS: kept on PAGE 1 as requested -->
+  <div style="margin-top:6px;">
+    <div class="row">
+      <div>Property Damage: ${d.property_damage || ""}</div>
+      <div>Amount: ${d.pd_amount || ""}</div>
+      <div>Photos of Damage: ${d.photos_of_damage || ""}</div>
+    </div>
 
-<div class="line">${d.incident_details || ""}</div>
+    <div class="row">
+      <div>Vehicle Repaired: ${d.vehicle_repaired || ""}</div>
+      <div>Vehicle Location: ${d.vehicle_location || ""}</div>
+    </div>
+  </div>
+  <div class="row">
+    <div>Police Investigated <span class="checkbox">${(d.police_investigated === "yes" || d.police_investigated === "on") ? "✔" : ""}</span></div>
+    <div>Agency: ${d.agency || ""}</div>
+    <div>Report No: ${d.report_no || ""}</div>
+    <div>Citation: ${d.citation || ""}</div>
+  </div>
 
-</div>
+</div> <!-- /page 1 -->
 
-<!-- PAGE 2 -->
-
+<!-- PAGE 2: POLICE / WITNESSES / MEDICAL / INSURANCE / EMPLOYER -->
 <div class="page">
 
-<div class="row">
-<div>Police Investigated <span class="checkbox">${(d.police_investigated === "yes" || d.police_investigated === "on") ? "✔" : ""}</span></div>
-<div>Agency: ${d.agency || ""}</div>
-<div>Report No: ${d.report_no || ""}</div>
-<div>Citation: ${d.citation || ""}</div>
-</div>
+  <br>
 
-<br>
+  <div><strong>Witnesses:</strong></div>
 
-<div class="row">
-<div>Property Damage:${d.property_damage || ""}</div>
-<div>Amount: ${d.pd_amount || ""}</div>
-<div>Photos of Damage: ${d.photos_of_damage || ""}</div>
-</div>
+  <div class="row">
+    <div>Name: ${d.witness1_name || ""}</div>
+    <div>Phone: ${d.witness1_phone || ""}</div>
+  </div>
 
-<div class="row">
-<div>Vehicle Repaired: ${d.vehicle_repaired || ""}</div>
-<div>Vehicle Location: ${d.vehicle_location || ""}</div>
-</div>
+  <br>
 
-<br>
+  <div class="row">
+    <div>Taken by Ambulance: ${d.ambulance_name || ""}</div>
+    <div>Hospital-Emergency: ${d.hospital_emergency || ""}</div>
+  </div>
 
-<div>Witnesses:</div>
+  <div class="row">
+    <div>Hospital-In Patient: ${d.hospital_in_patient || ""}</div>
+    <div>Dates: ${d.hospital_dates || ""}</div>
+  </div>
 
-<div class="row">
-<div>Name: ${d.witness1_name || ""}</div>
-<div>Phone: ${d.witness1_phone || ""}</div>
-</div>
+  <div>Injuries: ${d.injuries_sustained || ""}</div>
 
-<br>
+  <br>
 
-<div class="row">
-<div>Taken by Ambulance: ${d.ambulance_name || ""}</div>
-<div>Name:</div>
-</div>
+  <div>Prior injuries: ${d.prior_injuries || ""}</div>
+  <div>Prior doctors: ${d.prior_doctors || ""}</div>
 
-<div class="row">
-<div>Hospital-Emergency:${d.hospital_emergency}</div>
-<div>Name: ${d.hospital_emergency || ""}</div>
-</div>
+  <br>
 
-<div class="row">
-<div>Hospital-In Patient: ${d.hospital_in_patient || ""}</div>
-<div>Dates: ${d.hospital_dates || ""}</div>
-</div>
+  <div class="row">
+    <div>Plaintiff’s Auto Insurance: ${d.plaintiff_auto_ins || ""}</div>
+    <div>Policy No: ${d.policy_no || ""}</div>
+  </div>
 
-<div>Injuries: ${d.injuries_sustained || ""}</div>
+  <div class="row">
+    <div>Liability ONLY <span class="checkbox">${(d.liability_only === "yes" || d.liability_only === "on") ? "✔" : ""}</span></div>
+    <div>Med pay: ${d.med_pay_amount || ""}</div>
+    <div>Amount:</div>
+    <div>Umbrella: ${d.umbrella || ""}</div>
+  </div>
 
-<br>
+  <div class="row">
+    <div>Defendant #1: ${d.defendant1_name || ""}</div>
+    <div>Insurance: ${d.defendant1_ins || ""}</div>
+  </div>
 
-<div>Prior injuries: ${d.prior_injuries || ""}</div>
-<div>Prior doctors: ${d.prior_doctors || ""}</div>
+  <div class="row">
+    <div>Defendant #2: ${d.defendant2_name || ""}</div>
+    <div>Insurance: ${d.defendant2_ins || ""}</div>
+  </div>
 
-<br>
+  <div class="row">
+    <div>Contacted by Defendant’s Insurance: ${d.contacted_by_def_ins || ""}</div>
+    <div>Offer made: ${d.offer_made || ""}</div>
+    <div>Amount: ${d.offer_made_amount || ""}</div>
+  </div>
 
-<div class="row">
-<div>Plaintiff’s Auto Insurance: ${d.plaintiff_auto_ins || ""}</div>
-<div>Policy No: ${d.policy_no || ""}</div>
-</div>
+  <div class="row">
+    <div>Group Insurance: ${d.group_health_ins || ""}</div>
+    <div>Insurance Amount: ${d.insurance_amount || ""}</div>
+  </div>
 
-<div class="row">
-<div>Liability ONLY <span class="checkbox">${(d.liability_only === "yes" || d.liability_only === "on") ? "✔" : ""}</span></div>
-<div>Med pay: ${d.med_pay || ""}</div>
-<div>Amount:${d.med_pay_amount || ""}</div>
-<div>Umbrella: ${d.umbrella || ""}</div>
-</div>
+  <div class="row">
+    <div>Medicare: ${d.medicare_medicaid_supp || ""}</div>
+    <div>Supplemental: ${d.medicare_medicaid_supp || ""}</div>
+    <div>Medicaid: ${d.medicaid || ""}</div>
+  </div>
 
-<div class="row">
-<div>Defendant #1: ${d.defendant1_name || ""}</div>
-<div>Insurance: ${d.defendant1_ins || ""}</div>
-</div>
+  <div class="row">
+    <div>Lost Wage Claim: ${d.lost_wage_claim || d.lost_wage_claim_days_missed || ""}</div>
+    <div>Returned to work: ${d.returned_to_work || ""}</div>
+    <div>Wage: ${d.wage_hours_per_week || ""}</div>
+    <div>Hrs/Wk: ${d.wage_hours_per_week || ""}</div>
+  </div>
 
-<div class="row">
-<div>Defendant #2: ${d.defendant2_name || ""}</div>
-<div>Insurance: ${d.defendant2_ins || ""}</div>
-</div>
+  <div>Day Missed: ${d.lost_wage_claim_days_missed || ""}</div>
 
-<div class="row">
-<div>Contacted by Defendant’s Insurance:${d.contacted_by_def_ins || ""}</div>
-<div>Offer made:${d.offer_made || ""}</div>
-<div>Amount: ${d.offer_made_amount || ""}</div>
-</div>
+  <div>Employer: ${d.employer_name || ""}</div>
 
-<div class="row">
-<div>Group Insurance: ${d.group_health_ins || ""}</div>
-</div>
+  <div class="row">
+    <div>Address: ${d.address || ""}</div>
+    <div>City: ${d.city || ""}</div>
+    <div>State: ${d.state || ""}</div>
+  </div>
 
-<div class="row">
-<div>Insurance Amount: ${d.insurance_amount || ""}</div>
-</div>
+</div> <!-- /page 2 -->
 
-
-<div class="row">
-<div>Medicare:${d.medicare_medicaid_supp || ""}</div>
-<div>Supplemental: ${d.medicare_medicaid_supp || ""}</div>
-<div>Medicaid: ${d.medicaid || ""}</div>
-</div>
-
-<div class="row">
-<div>Lost Wage Claim:${d.lost_wage_claim_days_missed || ""}</div>
-<div>Returned to work: ${d.returned_to_work || ""}</div>
-<div>Wage: ${d.wage_hours_per_week || ""}</div>
-<div>Hrs/Wk:${d.wage_hours_per_week || ""}</div>
-</div>
-
-<div>Day Missed: ${d.lost_wage_claim_days_missed || ""}</div>
-
-<div>Employer: ${d.employer_name || ""}</div>
-
-<div class="row">
-<div>Address:${d.address || ""}</div>
-<div>City:${d.city || ""}</div>
-<div>State:${d.state || ""}</div>
-</div>
-
-</div>
-
-<!-- PAGE 3 -->
-
+<!-- PAGE 3: ADDITIONAL ATTORNEY NOTES -->
 <div class="page">
 
-<div class="row">
-<div>Other Attorney’s Lien:${d.other_attorney_lien || ""}</div>
-<div>Name: ${d.other_attorney_lien || ""}</div>
-</div>
+  <div class="row">
+    <div>Other Attorney’s Lien: ${d.other_attorney_lien || ""}</div>
+    <div>Name: ${d.other_attorney_lien || ""}</div>
+  </div>
 
-<div class="row">
-<div>Given Lawyer Referral number:${d.lawyer_referral_no || ""}</div>
-<div>ISBA: (800)922-8757</div>
-</div>
+  <div class="row">
+    <div>Given Lawyer Referral number: ${d.lawyer_referral_no || ""}</div>
+    <div>ISBA: (800)922-8757</div>
+  </div>
 
-<br>
+  <br>
 
-<div>Select one:</div>
+  
 
-<h2>ADDITIONAL ATTORNEY NOTES:</h2>
+</div> <!-- /page 3 -->
 
-<div class="line">${d.attorney_notes || ""}</div>
+<!-- PAGE 4: INTAKE / TASKS / NOTES -->
+<div class="page">
 
-</div>
+    <div>Select one:</div>
 
-<!-- PAGE 4 -->
+  <h2>ADDITIONAL ATTORNEY NOTES:</h2>
 
-<div>
+  <div class="line">${d.attorney_notes || ""}</div>
+  <h2 style="text-align:center;">INTAKE</h2>
 
-<h2 style="text-align:center;">INTAKE</h2>
+  <div class="row">
+    <div>Client's name: ${d.full_name || ""}</div>
+    <div>Date: ${d.intake_date || ""}</div>
+  </div>
 
-<div class="row">
-<div>Client's name: ${d.full_name || ""}</div>
-<div>Date: ${d.intake_date || ""}</div>
-</div>
+  <div class="row">
+    <div>Co-File(S): ${d.co_file || ""}</div>
+    <div>SOL: ${d.sol || ""}</div>
+  </div>
 
-<div class="row">
-<div>Co-File(S): ${d.co_file || ""}</div>
-<div>SOL: ${d.sol || ""}</div>
-</div>
+  <br>
 
-<br>
+  <div style="display:flex;justify-content:space-between;">
+    <strong>PI THINGS TO DO:</strong>
+    <strong>COMPLETED</strong>
+  </div>
 
-<div style="display:flex;justify-content:space-between;">
-<strong>PI THINGS TO DO:</strong>
-<strong>COMPLETED</strong>
-</div>
+  <br>
 
-<br>
+  <div class="task-row">
+    <div class="task-left">1. Meeting with Phil: __________________________________________________</div>
+    <div class="checkbox">${(d.meeting_with_phil === "yes" || d.meeting_with_phil === "on") ? "✔" : ""}</div>
+  </div>
 
-<style>
-.task-row{
-display:flex;
-align-items:center;
-justify-content:space-between;
-margin-bottom:6px;
-}
+  <div class="task-row">
+    <div class="task-left">2. Retainer: __________________________________________________________</div>
+    <div class="checkbox">${(d.retainer_signed === "yes" || d.retainer_signed === "on") ? "✔" : ""}</div>
+  </div>
 
-.task-left{
-flex:1;
-}
+  <div class="task-row">
+    <div class="task-left">3. Ltr to Referring attorney: __________________________________________</div>
+    <div class="checkbox">${(d.ltr_to_referring_atty === "yes" || d.ltr_to_referring_atty === "on") ? "✔" : ""}</div>
+  </div>
 
-.checkbox{
-display:inline-block;
-width:16px;
-height:16px;
-border:2px solid black;
-margin-right:8px;
-text-align:center;
-font-weight:bold;
-}
+  <div class="task-row">
+    <div class="task-left">4. Conflict Waiver: _________________________________________________</div>
+    <div class="checkbox">${(d.conflict_waiver === "yes" || d.conflict_waiver === "on") ? "✔" : ""}</div>
+  </div>
 
-.checkbox-right{
-width:18px;
-height:18px;
-border:2px solid black;
-text-align:center;
-font-weight:bold;
-}
-</style>
+  <div class="task-row">
+    <div class="task-left">5. Insurance cards from client: Auto ☐ Heath ☐ Supplemental __________</div>
+    <div class="checkbox">${(d.insurance_cards === "yes" || d.insurance_cards === "on") ? "✔" : ""}</div>
+  </div>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.meeting_with_phil === "yes" || d.meeting_with_phil === "on") ? "✔" : ""}</span>1. Meeting with Phil: __________________________________________________</div>
-<div class="checkbox-right">${(d.meeting_with_phil === "yes" || d.meeting_with_phil === "on") ? "✔" : ""}</div>
-</div>
+  <div class="task-row">
+    <div class="task-left">6. Obtain IL Crash report: __________________________________________</div>
+    <div class="checkbox">${(d.obtain_il_crash_report === "yes" || d.obtain_il_crash_report === "on") ? "✔" : ""}</div>
+  </div>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.retainer_signed === "yes" || d.retainer_signed === "on") ? "✔" : ""}</span>2. Retainer: __________________________________________________________</div>
-<div class="checkbox-right">${(d.retainer_signed === "yes" || d.retainer_signed === "on") ? "✔" : ""}</div>
-</div>
+  <div class="task-row">
+    <div class="task-left">7. Request Video Footage ☐ photos: __________________________________</div>
+    <div class="checkbox">${(d.request_video_photos === "yes" || d.request_video_photos === "on") ? "✔" : ""}</div>
+  </div>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.ltr_to_referring_atty === "yes" || d.ltr_to_referring_atty === "on") ? "✔" : ""}</span>3. Ltr to Referring attorney: __________________________________________</div>
-<div class="checkbox-right">${(d.ltr_to_referring_atty === "yes" || d.ltr_to_referring_atty === "on") ? "✔" : ""}</div>
-</div>
+  <div class="task-row">
+    <div class="task-left">8. Preserve Evidence ltr: ____________________________________________</div>
+    <div class="checkbox">${(d.preserve_evidence_letter === "yes" || d.preserve_evidence_letter === "on") ? "✔" : ""}</div>
+  </div>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.conflict_waiver === "yes" || d.conflict_waiver === "on") ? "✔" : ""}</span>4. Conflict Waiver: _________________________________________________</div>
-<div class="checkbox-right">${(d.conflict_waiver === "yes" || d.conflict_waiver === "on") ? "✔" : ""}</div>
-</div>
+  <div class="task-row">
+    <div class="task-left">9. Send Atty Liens to Defendant(s): __________________________________</div>
+    <div class="checkbox">${(d.atty_liens_to_defendant === "yes" || d.atty_liens_to_defendant === "on") ? "✔" : ""}</div>
+  </div>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.insurance_cards === "yes" || d.insurance_cards === "on") ? "✔" : ""}</span>5. Insurance cards from client: Auto ☐ Heath ☐ Supplemental __________</div>
-<div class="checkbox-right">${(d.insurance_cards === "yes" || d.insurance_cards === "on") ? "✔" : ""}</div>
-</div>
+  <div class="task-row">
+    <div class="task-left">10. Send Atty Liens to Def ☐ Client ☐ Insurance Co. __________________</div>
+    <div class="checkbox">${(d.atty_liens_to_def_ins_co === "yes" || d.atty_liens_to_def_ins_co === "on") ? "✔" : ""}</div>
+  </div>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.obtain_il_crash_report === "yes" || d.obtain_il_crash_report === "on") ? "✔" : ""}</span>6. Obtain IL Crash report: __________________________________________</div>
-<div class="checkbox-right">${(d.obtain_il_crash_report === "yes" || d.obtain_il_crash_report === "on") ? "✔" : ""}</div>
-</div>
+  <div class="task-row">
+    <div class="task-left">11. Notify MEDICARE ☐ IHFS: _______________________________________</div>
+    <div class="checkbox">${(d.notify_medicare_ihfs === "yes" || d.notify_medicare_ihfs === "on") ? "✔" : ""}</div>
+  </div>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.request_video_photos === "yes" || d.request_video_photos === "on") ? "✔" : ""}</span>7. Request Video Footage ☐ photos: __________________________________</div>
-<div class="checkbox-right">${(d.request_video_photos === "yes" || d.request_video_photos === "on") ? "✔" : ""}</div>
-</div>
+  <div class="task-row">
+    <div class="task-left">12. Notify Med pay ☐ Health Ins ☐ W/C: ______________________________</div>
+    <div class="checkbox">${(d.notify_med_pay_health_wc === "yes" || d.notify_med_pay_health_wc === "on") ? "✔" : ""}</div>
+  </div>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.preserve_evidence_letter === "yes" || d.preserve_evidence_letter === "on") ? "✔" : ""}</span>8. Preserve Evidence ltr: ____________________________________________</div>
-<div class="checkbox-right">${(d.preserve_evidence_letter === "yes" || d.preserve_evidence_letter === "on") ? "✔" : ""}</div>
-</div>
+  <div class="task-row">
+    <div class="task-left">13. UM ☐ SOS ☐ Hit & Run ☐ DRAM ☐ 1 Yr SOL ☐ FOIA __________________</div>
+    <div class="checkbox">${(d.um_sos_hit_run_notice === "yes" || d.um_sos_hit_run_notice === "on") ? "✔" : ""}</div>
+  </div>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.atty_liens_to_defendant === "yes" || d.atty_liens_to_defendant === "on") ? "✔" : ""}</span>9. Send Atty Liens to Defendant(s): __________________________________</div>
-<div class="checkbox-right">${(d.atty_liens_to_defendant === "yes" || d.atty_liens_to_defendant === "on") ? "✔" : ""}</div>
-</div>
+  <div class="task-row">
+    <div class="task-left">14. Check Def Ticket and Guilty Plea: _________________________________</div>
+    <div class="checkbox">${(d.check_def_ticket === "yes" || d.check_def_ticket === "on") ? "✔" : ""}</div>
+  </div>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.atty_liens_to_def_ins_co === "yes" || d.atty_liens_to_def_ins_co === "on") ? "✔" : ""}</span>10. Send Atty Liens to Def ☐ Client ☐ Insurance Co. __________________</div>
-<div class="checkbox-right">${(d.atty_liens_to_def_ins_co === "yes" || d.atty_liens_to_def_ins_co === "on") ? "✔" : ""}</div>
-</div>
+  <div class="task-row">
+    <div class="task-left">15. Send Billing Letter: _____________________________________________</div>
+    <div class="checkbox">${(d.send_billing_letter === "yes" || d.send_billing_letter === "on") ? "✔" : ""}</div>
+  </div>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.notify_medicare_ihfs === "yes" || d.notify_medicare_ihfs === "on") ? "✔" : ""}</span>11. Notify MEDICARE ☐ IHFS: _______________________________________</div>
-<div class="checkbox-right">${(d.notify_medicare_ihfs === "yes" || d.notify_medicare_ihfs === "on") ? "✔" : ""}</div>
-</div>
+  <div class="task-row">
+    <div class="task-left">16. Order medical bills ☐ Records: __________________________________</div>
+    <div class="checkbox">${(d.order_med_records_bills === "yes" || d.order_med_records_bills === "on") ? "✔" : ""}</div>
+  </div>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.notify_med_pay_health_wc === "yes" || d.notify_med_pay_health_wc === "on") ? "✔" : ""}</span>12. Notify Med pay ☐ Health Ins ☐ W/C: ______________________________</div>
-<div class="checkbox-right">${(d.notify_med_pay_health_wc === "yes" || d.notify_med_pay_health_wc === "on") ? "✔" : ""}</div>
-</div>
+  <div class="task-row">
+    <div class="task-left">17. Liability Limits Ltr to Def ☐ Client ☐ Insurance: _________________</div>
+    <div class="checkbox">${(d.liability_limits_letter === "yes" || d.liability_limits_letter === "on") ? "✔" : ""}</div>
+  </div>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.um_sos_hit_run_notice === "yes" || d.um_sos_hit_run_notice === "on") ? "✔" : ""}</span>13. UM ☐ SOS ☐ Hit & Run ☐ DRAM ☐ 1 Yr SOL ☐ FOIA __________________</div>
-<div class="checkbox-right">${(d.um_sos_hit_run_notice === "yes" || d.um_sos_hit_run_notice === "on") ? "✔" : ""}</div>
-</div>
+  <div class="task-row">
+    <div class="task-left">18. Obtain Wage verification: ________________________________________</div>
+    <div class="checkbox">${(d.wage_verification === "yes" || d.wage_verification === "on") ? "✔" : ""}</div>
+  </div>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.check_def_ticket === "yes" || d.check_def_ticket === "on") ? "✔" : ""}</span>14. Check Def Ticket and Guilty Plea: _________________________________</div>
-<div class="checkbox-right">${(d.check_def_ticket === "yes" || d.check_def_ticket === "on") ? "✔" : ""}</div>
-</div>
+  <br>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.send_billing_letter === "yes" || d.send_billing_letter === "on") ? "✔" : ""}</span>15. Send Billing Letter: _____________________________________________</div>
-<div class="checkbox-right">${(d.send_billing_letter === "yes" || d.send_billing_letter === "on") ? "✔" : ""}</div>
-</div>
+  <strong>Notes:</strong>
+  <div style="border:1px solid black;height:200px;padding:6px;">${d.notes || ""}</div>
 
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.order_med_records_bills === "yes" || d.order_med_records_bills === "on") ? "✔" : ""}</span>16. Order medical bills ☐ Records: __________________________________</div>
-<div class="checkbox-right">${(d.order_med_records_bills === "yes" || d.order_med_records_bills === "on") ? "✔" : ""}</div>
-</div>
-
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.liability_limits_letter === "yes" || d.liability_limits_letter === "on") ? "✔" : ""}</span>17. Liability Limits Ltr to Def ☐ Client ☐ Insurance: _________________</div>
-<div class="checkbox-right">${(d.liability_limits_letter === "yes" || d.liability_limits_letter === "on") ? "✔" : ""}</div>
-</div>
-
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${(d.wage_verification === "yes" || d.wage_verification === "on") ? "✔" : ""}</span>18. Obtain Wage verification: ________________________________________</div>
-<div class="checkbox-right">${(d.wage_verification === "yes" || d.wage_verification === "on") ? "✔" : ""}</div>
-</div>
-
-<div class="task-row">
-<div class="task-left"><span class="checkbox">${d.wage_verification=== "yes" || d.wage_verification === "on" ? "✔" : ""}</span>19.Wage Verification:  </div>
-<div class="checkbox-right">${(d.wage_verification === "yes" || d.wage_verification === "on") ? "✔" : ""}</div>
-</div>
-
-<br>
-
-<strong>Notes:</strong>
-
-<div style="border:1px solid black;height:200px;">${d.notes || ""}</div>
-
-</div>
+</div> <!-- /page 4 -->
 
 </body>
 </html>
