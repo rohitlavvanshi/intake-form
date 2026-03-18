@@ -7,7 +7,7 @@ const puppeteer = require("puppeteer");
 const app = express();
 const PORT = 3000;
 
-const BASE_URL = "https://1ba5-171-76-85-123.ngrok-free.app";
+const BASE_URL = "http://18.206.96.210:3000";
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
