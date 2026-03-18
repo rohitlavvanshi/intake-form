@@ -65,7 +65,7 @@ body{
 .small { font-size:13px; color:#222; }
 
 /* checkbox looks consistent on PDF */
-.checkbox{
+/* .checkbox{
   display:inline-flex;
   width:18px;
   height:18px;
@@ -76,8 +76,27 @@ body{
   line-height:16px;
   align-items:center;
  justify-content:center;
-}
+} */
+.checkbox {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #000;
+  position: relative;
+} 
 
+/* DRAW tick using CSS instead of text */
+.checkbox.checked::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 1px;
+  width: 4px;
+  height: 11px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
 /* keep tasks area tighter */
 .task-row{
   display:flex;
@@ -173,7 +192,7 @@ hr { border:0; border-top:1px solid #000; margin:8px 0; }
 
   <div class="row">
     <div>Details of the Incident:</div>
-    <div>Hit & Run <span class="checkbox">${(d.hit_and_run === "yes" || d.hit_and_run === "on") ? "✔" : ""}</span></div>
+    <div>Hit & Run <span class="checkbox ${(d.hit_and_run === "yes" || d.hit_and_run === "on") ? "checked" : ""}"></span></div>
   </div>
 
   <div class="line">${d.incident_details || ""}</div>
@@ -192,7 +211,7 @@ hr { border:0; border-top:1px solid #000; margin:8px 0; }
     </div>
   </div>
   <div class="row">
-    <div>Police Investigated <span class="checkbox">${(d.police_investigated === "yes" || d.police_investigated === "on") ? "✔" : ""}</span></div>
+    <div>Police Investigated <span class="checkbox ${(d.police_investigated === "yes" || d.police_investigated === "on") ? "checked" : ""}"></span></div>
     <div>Agency: ${d.agency || ""}</div>
     <div>Report No: ${d.report_no || ""}</div>
     <div>Citation: ${d.citation || ""}</div>
@@ -239,7 +258,7 @@ hr { border:0; border-top:1px solid #000; margin:8px 0; }
   </div>
 
   <div class="row">
-    <div>Liability ONLY <span class="checkbox">${(d.liability_only === "yes" || d.liability_only === "on") ? "✔" : ""}</span></div>
+    <div>Liability ONLY <span class="checkbox ${(d.liability_only === "yes" || d.liability_only === "on") ? "checked" : ""}"></span></div>
     <div>Med pay: ${d.med_pay_amount || ""}</div>
     <div>Amount:</div>
     <div>Umbrella: ${d.umbrella || ""}</div>
@@ -341,92 +360,92 @@ hr { border:0; border-top:1px solid #000; margin:8px 0; }
 
   <div class="task-row">
     <div class="task-left">1. Meeting with Phil: __________________________________________________</div>
-    <div class="checkbox">${(d.meeting_with_phil === "yes" || d.meeting_with_phil === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.meeting_with_phil === "yes" || d.meeting_with_phil === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">2. Retainer: __________________________________________________________</div>
-    <div class="checkbox">${(d.retainer_signed === "yes" || d.retainer_signed === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.retainer_signed === "yes" || d.retainer_signed === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">3. Ltr to Referring attorney: __________________________________________</div>
-    <div class="checkbox">${(d.ltr_to_referring_atty === "yes" || d.ltr_to_referring_atty === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.ltr_to_referring_atty === "yes" || d.ltr_to_referring_atty === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">4. Conflict Waiver: _________________________________________________</div>
-    <div class="checkbox">${(d.conflict_waiver === "yes" || d.conflict_waiver === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.conflict_waiver === "yes" || d.conflict_waiver === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">5. Insurance cards from client: Auto ☐ Heath ☐ Supplemental __________</div>
-    <div class="checkbox">${(d.insurance_cards === "yes" || d.insurance_cards === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.insurance_cards === "yes" || d.insurance_cards === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">6. Obtain IL Crash report: __________________________________________</div>
-    <div class="checkbox">${(d.obtain_il_crash_report === "yes" || d.obtain_il_crash_report === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.obtain_il_crash_report === "yes" || d.obtain_il_crash_report === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">7. Request Video Footage ☐ photos: __________________________________</div>
-    <div class="checkbox">${(d.request_video_photos === "yes" || d.request_video_photos === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.request_video_photos === "yes" || d.request_video_photos === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">8. Preserve Evidence ltr: ____________________________________________</div>
-    <div class="checkbox">${(d.preserve_evidence_letter === "yes" || d.preserve_evidence_letter === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.preserve_evidence_letter === "yes" || d.preserve_evidence_letter === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">9. Send Atty Liens to Defendant(s): __________________________________</div>
-    <div class="checkbox">${(d.atty_liens_to_defendant === "yes" || d.atty_liens_to_defendant === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.atty_liens_to_defendant === "yes" || d.atty_liens_to_defendant === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">10. Send Atty Liens to Def ☐ Client ☐ Insurance Co. __________________</div>
-    <div class="checkbox">${(d.atty_liens_to_def_ins_co === "yes" || d.atty_liens_to_def_ins_co === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.atty_liens_to_def_ins_co === "yes" || d.atty_liens_to_def_ins_co === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">11. Notify MEDICARE ☐ IHFS: _______________________________________</div>
-    <div class="checkbox">${(d.notify_medicare_ihfs === "yes" || d.notify_medicare_ihfs === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.notify_medicare_ihfs === "yes" || d.notify_medicare_ihfs === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">12. Notify Med pay ☐ Health Ins ☐ W/C: ______________________________</div>
-    <div class="checkbox">${(d.notify_med_pay_health_wc === "yes" || d.notify_med_pay_health_wc === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.notify_med_pay_health_wc === "yes" || d.notify_med_pay_health_wc === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">13. UM ☐ SOS ☐ Hit & Run ☐ DRAM ☐ 1 Yr SOL ☐ FOIA __________________</div>
-    <div class="checkbox">${(d.um_sos_hit_run_notice === "yes" || d.um_sos_hit_run_notice === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.um_sos_hit_run_notice === "yes" || d.um_sos_hit_run_notice === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">14. Check Def Ticket and Guilty Plea: _________________________________</div>
-    <div class="checkbox">${(d.check_def_ticket === "yes" || d.check_def_ticket === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.check_def_ticket === "yes" || d.check_def_ticket === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">15. Send Billing Letter: _____________________________________________</div>
-    <div class="checkbox">${(d.send_billing_letter === "yes" || d.send_billing_letter === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.send_billing_letter === "yes" || d.send_billing_letter === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">16. Order medical bills ☐ Records: __________________________________</div>
-    <div class="checkbox">${(d.order_med_records_bills === "yes" || d.order_med_records_bills === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.order_med_records_bills === "yes" || d.order_med_records_bills === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">17. Liability Limits Ltr to Def ☐ Client ☐ Insurance: _________________</div>
-    <div class="checkbox">${(d.liability_limits_letter === "yes" || d.liability_limits_letter === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.liability_limits_letter === "yes" || d.liability_limits_letter === "on") ? "checked" : ""}"></div>
   </div>
 
   <div class="task-row">
     <div class="task-left">18. Obtain Wage verification: ________________________________________</div>
-    <div class="checkbox">${(d.wage_verification === "yes" || d.wage_verification === "on") ? "✔" : ""}</div>
+    <div class="checkbox ${(d.wage_verification === "yes" || d.wage_verification === "on") ? "checked" : ""}"></div>
   </div>
 
   <br>
