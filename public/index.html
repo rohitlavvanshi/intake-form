@@ -831,6 +831,8 @@ if(intakeBtn){
 
       const jsonData = Object.fromEntries(formData.entries());
 
+      jsonData.contact_id = PREFILL_DATA.contact_id;
+      
       console.log("Sending to webhook:", jsonData);
 
       await fetch("https://n8n.storyroi.com/webhook/intake_process_complete",{
