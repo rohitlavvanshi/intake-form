@@ -2326,7 +2326,7 @@
       "attorney": "Phil Kesler",
       "secretary": "Carol",
       "appointment_date": "2026-03-11",
-      "appointment_time": "10:00 AM",
+      "appointment_time": "",
       "file_no": "F-001",
       "co_file": "CF-10",
       "sol": "2027-03-11",
@@ -2425,6 +2425,6 @@
       "attorney_notes": "Client reported elbow injury and severe pain"
     },
     "created_at": "2026-03-16T15:16:50.539Z",
-    "submitted_at": "2026-03-18T21:15:29.724Z"
+    "submitted_at": "2026-03-19T15:25:14.844Z"
   }
 ]
