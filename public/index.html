@@ -523,7 +523,7 @@ input.invalid, textarea.invalid, select.invalid {
 </div>
 
 <div class="form-group">
-<label>Notes</label>
+<label>Additional Intaker Notes</label>
 <input type="text" name="notes">
 </div>
 
@@ -593,7 +593,58 @@ Finalize Intake for GHL Upload
 <script>
 
 document.addEventListener("DOMContentLoaded", function(){
+/* ================= APPLY PREFILL DATA ================= */
 
+setTimeout(function(){
+
+if (typeof PREFILL_DATA !== "undefined") {
+
+  Object.keys(PREFILL_DATA).forEach(function(key){
+
+    const elements = document.querySelectorAll('[name="'+key+'"]');
+
+    if(!elements.length) return;
+
+    elements.forEach(function(el){
+
+      const value = PREFILL_DATA[key];
+
+      if(el.type === "checkbox"){
+
+        if(value === "yes" || value === true || value === "on"){
+          el.checked = true;
+        }
+
+      }
+
+      else if(el.type === "date"){
+
+        const safeDate = formatDateForInput(value);
+
+        if(safeDate){
+          el.value = safeDate;
+        }
+
+      }
+
+      else{
+
+        el.value = value ?? "";
+
+      }
+
+    });
+
+  });
+
+}
+
+}, 100); // delay ensures PREFILL_DATA is injected
+const formId = getFormIdFromURL();
+if(formId){
+  const hidden = document.getElementById("form_id");
+  if(hidden) hidden.value = formId;
+}
 /* ================= GET FORM ID ================= */
 
 function getFormIdFromURL(){
@@ -641,64 +692,67 @@ function formatDateForInput(value){
 
 /* ================= PREFILL ================= */
 
-const formId = getFormIdFromURL();
+// const formId = getFormIdFromURL();
 
-if(formId){
+// if(formId){
 
-  const hidden = document.getElementById("form_id");
-  if(hidden) hidden.value = formId;
+//   const hidden = document.getElementById("form_id");
+//   if(hidden) hidden.value = formId;
 
-  /* IMPORTANT: use API route that returns JSON */
+//   /* IMPORTANT: use API route that returns JSON */
 
-  fetch("/api/form/" + formId)
+//   fetch("/api/form/" + formId)
 
-  .then(res => res.json())
+//   .then(res => res.json())
 
-  .then(data => {
+//   .then(data => {
 
-    const formData = data.prefill || {};
+//     const formData = data.formData || {
+//       ...(data.prefill || {}),
+//       ...(data.response || {}) 
+//     };
 
-    Object.keys(formData).forEach(function(key){
+//     Object.keys(formData).forEach(function(key){
 
-      const elements = document.querySelectorAll('[name="'+key+'"]');
+//       const elements = document.querySelectorAll('[name="'+key+'"]');
 
-      elements.forEach(function(el){
+//       elements.forEach(function(el){
 
-        const value = formData[key];
+//         const value = formData[key];
 
-        if(el.type === "checkbox"){
+//         if(el.type === "checkbox"){
 
-          if(value === "yes" || value === true || value === "on"){
-            el.checked = true;
-          }
+//           if(value === "yes" || value === true || value === "on"){
+//             el.checked = true;
+//           }
 
-        }
+//         }
 
-        else if(el.type === "date"){
+//         else if(el.type === "date"){
 
-          const safeDate = formatDateForInput(value);
+//           const safeDate = formatDateForInput(value);
 
-          if(safeDate){
-            el.value = safeDate;
-          }
+//           if(safeDate){
+//             el.value = safeDate;
+//           }
 
-        }
+//         }
 
-        else{
+//         else{
 
-          el.value = value ?? "";
+//           el.value = value ?? "";
 
-        }
+//         }
 
-      });
+//       });
 
-    });
+//     });
 
-  })
+//   })
 
-  .catch(err => console.error("Prefill error:", err));
+//   .catch(err => console.error("Prefill error:", err));
 
-}
+// }
 
 /* ================= INLINE ERROR HELPERS (only used for email & phone) ================= */
 
@@ -832,7 +886,14 @@ if(intakeBtn){
       const jsonData = Object.fromEntries(formData.entries());
 
       jsonData.contact_id = PREFILL_DATA.contact_id;
-      
+      // ✅ SAVE DRAFT TO YOUR SERVER FIRST
+      await fetch("/save-draft", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(jsonData)
+    });
       console.log("Sending to webhook:", jsonData);
 
       await fetch("https://n8n.storyroi.com/webhook/intake_process_complete",{

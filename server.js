@@ -127,11 +127,14 @@ app.get("/form/:id/:contact_id", (req, res) => {
     path.join(__dirname, "public/index.html"),
     "utf8"
   );
-
+const mergedData = {
+      ...(record.prefill || {}),
+      ...(record.response || {}) 
+    };
   const script = `
 <script>
 
-const PREFILL_DATA = ${JSON.stringify(record.prefill)};
+const PREFILL_DATA = ${JSON.stringify(mergedData)};
 
 window.addEventListener("DOMContentLoaded", function(){
 
@@ -426,6 +429,36 @@ app.post("/submit", async (req, res) => {
     });
   }
 });
+
+//save draft
+app.post("/save-draft", (req, res) => {
+  try {
+    const formId = req.body.form_id;
+
+    const forms = readData();
+    const form = forms.find(f => f.id === formId);
+
+    if (!form) {
+      return res.status(404).json({ success: false, message: "Form not found" });
+    }
+
+    // ✅ SAVE AS RESPONSE (draft)
+    form.response = req.body;
+    form.updated_at = new Date().toISOString();
+
+    writeData(forms);
+
+    res.json({
+      success: true,
+      message: "Draft saved successfully"
+    });
+
+  } catch (err) {
+    console.error("Draft save error:", err);
+    res.status(500).json({ success: false });
+  }
+});
+
 /* ---------- START SERVER ---------- */
 
 app.listen(PORT, () => {
