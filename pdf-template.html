@@ -191,7 +191,7 @@ hr { border:0; border-top:1px solid #000; margin:8px 0; }
   </div>
 
   <div class="row">
-    <div>Details of the Incident:</div>
+    <div>Details of the Incident:${d.incident_details || ""}</div>
     <div>Hit & Run <span class="checkbox ${(d.hit_and_run === "yes" || d.hit_and_run === "on") ? "checked" : ""}"></span></div>
   </div>
 
