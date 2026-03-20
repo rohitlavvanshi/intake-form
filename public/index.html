@@ -594,7 +594,7 @@ Finalize Intake for GHL Upload
 
 document.addEventListener("DOMContentLoaded", function(){
 /* ================= APPLY PREFILL DATA ================= */
-
+let intakeDone=false;
 setTimeout(function(){
 
 if (typeof PREFILL_DATA !== "undefined") {
@@ -857,7 +857,7 @@ const submitBtn = document.getElementById("submitBtn");
 /* ================= INTAKE STATE CONTROL ================= */
 
 if (typeof INTAKE_COMPLETED !== "undefined" && INTAKE_COMPLETED === true) {
-
+  intakeDone = true;
   // ✅ FINALIZED STATE
   section8.style.display = "block";
 
@@ -945,7 +945,7 @@ if(intakeBtn){
     /* mark intake complete */
 
     intakeCompleted.value = "yes";
-
+    intakeDone = true;
     intakeStatus.style.display = "inline";
 
     intakeBtn.disabled = true;
@@ -998,7 +998,7 @@ form.addEventListener("submit", function(e){
     return;
   }
 
-  if(intakeCompleted.value !== "yes"){
+  if(!intakeDone){
 
     e.preventDefault();
 
