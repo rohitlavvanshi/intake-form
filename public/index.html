@@ -141,12 +141,12 @@ input.invalid, textarea.invalid, select.invalid {
 
 <div class="form-group">
 <label>Home Phone</label>
-<input type="text" name="home_phone" id="home_phone">
+<input type="text" name="home_phone" id="home_phone" autocomplete="off" inputmode="numeric" pattern="[0-9]*">
 </div>
 
 <div class="form-group">
 <label>Cell Phone</label>
-<input type="text" name="cell_phone" id="cell_phone">
+<input type="text" name="cell_phone" id="cell_phone" autocomplete="off" inputmode="numeric" pattern="[0-9]*">
 </div>
 
 <div class="form-group">
@@ -191,7 +191,7 @@ input.invalid, textarea.invalid, select.invalid {
 
 <div class="form-group">
 <label>Contact Phone</label>
-<input type="text" name="contact_phone" id="contact_phone">
+<input type="text" name="contact_phone" id="contact_phone" autocomplete="off" inputmode="numeric" pattern="[0-9]*">
 </div>
 
 </div>
@@ -270,10 +270,10 @@ input.invalid, textarea.invalid, select.invalid {
 <input type="text" name="pd_amount" >
 </div>
 
-<div class="checkbox-item">
+<!-- <div class="checkbox-item">
 <label>Photos of Damage:</label>
 <input type="text" name="photos_of_damage" >
-</div>
+</div> -->
 
 <div class="checkbox-item">
 <label>Vehicle Repaired:</label>
@@ -292,7 +292,7 @@ input.invalid, textarea.invalid, select.invalid {
 
 <div class="form-group">
 <label>Witness 1 Phone</label>
-<input type="text" name="witness1_phone" id="witness1_phone">
+<input type="text" name="witness1_phone" id="witness1_phone" autocomplete="off" inputmode="numeric" pattern="[0-9]*">
 </div>
 
 <div class="form-group">
@@ -583,7 +583,7 @@ Submit
 
 </div>
 
-<button type="submit" id="submitBtn" disabled>
+<button type="submit" id="submitBtn"  style="display:none;">
 Finalize Intake for GHL Upload
 </button>
 
@@ -852,6 +852,36 @@ const intakeCompleted = document.getElementById("intake_completed");
 
 const section8 = document.getElementById("section8");
 const submitBtn = document.getElementById("submitBtn");
+/* ================= INTAKE STATE CONTROL ================= */
+
+/* ================= INTAKE STATE CONTROL ================= */
+
+if (typeof INTAKE_COMPLETED !== "undefined" && INTAKE_COMPLETED === true) {
+
+  // ✅ FINALIZED STATE
+  section8.style.display = "block";
+
+  submitBtn.style.display = "block";
+  submitBtn.disabled = false;
+
+  // ❌ hide intake button (already declared above)
+  if(intakeBtn){
+    intakeBtn.style.display = "none";
+  }
+
+} else {
+
+  // 🟢 INITIAL STATE
+  section8.style.display = "none";
+
+  submitBtn.style.display = "none";
+
+  // ✅ show intake button
+  if(intakeBtn){
+    intakeBtn.style.display = "block";
+  }
+
+}
 
 const form = document.querySelector("form");
 
@@ -919,12 +949,12 @@ if(intakeBtn){
     intakeStatus.style.display = "inline";
 
     intakeBtn.disabled = true;
+    intakeBtn.style.display = "none";
     intakeBtn.style.background = "#999";
 
-    section8.style.display = "block";
+    //section8.style.display = "block";
 
     submitBtn.disabled = false;
-
     /* LOCK sections 1-7 WITHOUT disabling */
 
     document.querySelectorAll("input, textarea, select").forEach(function(field){

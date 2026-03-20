@@ -86,6 +86,7 @@ app.post("/create-form-link", (req, res) => {
     id: id,
     prefill: formData,
     response: null,
+    intake_completed: false,
     created_at: new Date().toISOString(),
     submitted_at: null
   });
@@ -131,11 +132,12 @@ const mergedData = {
       ...(record.prefill || {}),
       ...(record.response || {}) 
     };
+    const intakeCompleted = record.intake_completed === true;
   const script = `
 <script>
 
 const PREFILL_DATA = ${JSON.stringify(mergedData)};
-
+const INTAKE_COMPLETED = ${intakeCompleted};
 window.addEventListener("DOMContentLoaded", function(){
 
     Object.keys(PREFILL_DATA).forEach(function(key){
@@ -150,7 +152,7 @@ window.addEventListener("DOMContentLoaded", function(){
 
             if(el.type === "checkbox"){
 
-                if(value === "yes" || value === true){
+                if(value === "yes" || value === true || value==="on"){
                     el.checked = true;
                 }
 
@@ -445,7 +447,7 @@ app.post("/save-draft", (req, res) => {
     // ✅ SAVE AS RESPONSE (draft)
     form.response = req.body;
     form.updated_at = new Date().toISOString();
-
+    form.intake_completed = true; // intake compled
     writeData(forms);
 
     res.json({
